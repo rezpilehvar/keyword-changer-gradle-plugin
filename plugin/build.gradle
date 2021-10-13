@@ -1,0 +1,27 @@
+plugins {
+    id 'java-gradle-plugin'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.android.tools.build:gradle-api:3.3.2'
+}
+
+sourceSets {
+    main {
+        java.srcDir file('src/main')
+    }
+}
+
+gradlePlugin {
+    // Define the plugin
+    plugins {
+        packageChanger {
+            id = 'ir.irezaa.packagechanger'
+            implementationClass = 'ir.irezaa.PackageChangerPlugin'
+        }
+    }
+}
