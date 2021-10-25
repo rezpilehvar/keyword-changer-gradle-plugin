@@ -16,11 +16,5 @@
       <version>1.5.31</version>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-      <groupId>com.android.tools.build</groupId>
-      <artifactId>gradle</artifactId>
-      <version>7.0.2</version>
-      <scope>runtime</scope>
-    </dependency>
   </dependencies>
 </project>

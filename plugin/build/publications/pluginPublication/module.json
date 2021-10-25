@@ -59,13 +59,6 @@
       },
       "dependencies": [
         {
-          "group": "com.android.tools.build",
-          "module": "gradle",
-          "version": {
-            "requires": "7.0.2"
-          }
-        },
-        {
           "group": "org.jetbrains.kotlin",
           "module": "kotlin-stdlib-jdk8",
           "version": {
