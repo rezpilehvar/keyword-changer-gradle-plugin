@@ -1,27 +1,38 @@
 plugins {
     id 'java-gradle-plugin'
-}
-
-repositories {
-    mavenCentral()
+    id 'kotlin'
+    id 'maven-publish'
 }
 
 dependencies {
-    implementation 'com.android.tools.build:gradle-api:3.3.2'
+    implementation 'com.android.tools.build:gradle:7.0.2'
+    implementation gradleApi()
 }
 
-sourceSets {
-    main {
-        java.srcDir file('src/main')
+project.description = 'A plugin to change keywords before build'
+project.group = 'ir.irezaa'
+project.version = '1.0.0'
+
+project.ext.name = 'Keyword Changer'
+project.ext.pluginId = 'ir.irezaa.keywordchanger'
+project.ext.implementationClass = 'ir.irezaa.keywordchanger.PluginImp'
+
+gradlePlugin {
+    plugins {
+        keywordChanger {
+            id = project.pluginId
+            implementationClass = project.implementationClass
+        }
     }
 }
 
-gradlePlugin {
-    // Define the plugin
-    plugins {
-        packageChanger {
-            id = 'ir.irezaa.packagechanger'
-            implementationClass = 'ir.irezaa.PackageChangerPlugin'
+publishing {
+    publications {
+        pluginPublication (MavenPublication) {
+            from    components.java
+            groupId    project.group
+            artifactId    "keywordchanger"
+            version    project.version
         }
     }
 }

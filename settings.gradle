@@ -3,8 +3,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
     }
 }
-rootProject.name = "PackageChanger"
+rootProject.name = "KeywordChanger"
 include ':plugin'
-include ':test'
+include ':sample'

@@ -1,0 +1,19 @@
+plugins {
+    id 'ir.irezaa.keywordchanger'
+}
+
+keywordChanger {
+    configs {
+        stagingToProduction {
+            srcPath "src/main"
+            dstPath "$buildDir/src/production"
+            renamePathAndFiles = false
+
+            keywords = [
+                    "Staging"                        : "Production",
+                    "sample"                         : "app",
+                    "ir.irezaa.keywordchanger.sample": "ir.irezaa.keywordchanger.app"
+            ]
+        }
+    }
+}
