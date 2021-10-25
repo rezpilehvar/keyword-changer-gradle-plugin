@@ -17,8 +17,6 @@ abstract class CopyAndFilterTask : Copy() {
             task.into(config.dstPath)
 
             config.keywords.forEach { keyword ->
-                println("adding filter: replace ${keyword.key} with ${keyword.value}")
-
                 task.filter { line ->
                     line.replace(
                         keyword.key,
