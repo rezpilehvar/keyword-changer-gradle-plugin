@@ -1,10 +1,12 @@
 package ir.irezaa.keywordchanger
 
+import com.android.build.gradle.internal.tasks.factory.dependsOn
 import ir.irezaa.keywordchanger.configs.Config
 import ir.irezaa.keywordchanger.configs.ConfigManager
 import ir.irezaa.keywordchanger.internal.tasks.TaskFactoryImp
 import ir.irezaa.keywordchanger.internal.tasks.factory.TaskFactory
-import ir.irezaa.keywordchanger.tasks.CopyAndFilterTask
+import ir.irezaa.keywordchanger.tasks.CopyTask
+import ir.irezaa.keywordchanger.tasks.DeleteTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -27,17 +29,50 @@ class PluginImp : Plugin<Project> {
 
         project.afterEvaluate {
             configManager.configs.asMap.values.forEach {
-                createTaskForConfig(it)
+                createTasksForConfig(it)
             }
         }
     }
 
-    private fun createTaskForConfig(config: Config) {
-        taskFactory.register(
-            CopyAndFilterTask.Creator(
-                "changeKeywords${config.name.capitalize()}",
+    private fun createTasksForConfig(config: Config) {
+        val copyAndFilterSrcFilesTask = taskFactory.register(
+            CopyTask.CopyAndFilterCreator(
+                "filterAndCopyToTemp${config.name.capitalize()}",
+                project,
                 config
             )
         )
+
+        val deleteSrcFilesTask = taskFactory.register(
+            DeleteTask.DeleteSrcFilesCreator(
+                "deleteSrcFiles${config.name.capitalize()}",
+                project,
+                config
+            )
+        )
+        deleteSrcFilesTask.dependsOn(copyAndFilterSrcFilesTask)
+
+        val copyBackFilesTask = taskFactory.register(
+            CopyTask.CopyBackCreator(
+                "copyBackFiles${config.name.capitalize()}",
+                config
+            )
+        )
+        copyBackFilesTask.dependsOn(deleteSrcFilesTask)
+
+        val deleteTmpFilesTask = taskFactory.register(
+            DeleteTask.DeleteTmpFilesCreator(
+                "deleteTmpFiles${config.name.capitalize()}",
+                project,
+                config
+            )
+        )
+        deleteTmpFilesTask.dependsOn(copyBackFilesTask)
+
+
+        project.tasks.register("changeKeywords${config.name.capitalize()}") {
+            it.dependsOn(deleteTmpFilesTask)
+        }
+
     }
 }

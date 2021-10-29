@@ -5,6 +5,7 @@ plugins {
 }
 
 dependencies {
+    implementation 'com.android.tools.build:gradle:7.0.2'
     implementation gradleApi()
 }
 

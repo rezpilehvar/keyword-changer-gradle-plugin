@@ -14,10 +14,10 @@ class DefaultConfig(
         this.srcPath = srcPath
     }
 
-    override var dstPath: String = ""
+    override var tmpPath: String = ""
 
-    override fun dstPath(dstPath: String) {
-        this.dstPath = dstPath
+    override fun tmpPath(tmoPath: String) {
+        this.tmpPath = tmoPath
     }
 
     override var keywords: MutableMap<String, String> = mutableMapOf()

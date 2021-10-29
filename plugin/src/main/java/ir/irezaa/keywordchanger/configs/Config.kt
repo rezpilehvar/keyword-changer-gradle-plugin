@@ -9,9 +9,9 @@ interface Config : Named {
 
     fun srcPath(srcPath: String)
 
-    var dstPath: String
+    var tmpPath: String
 
-    fun dstPath(dstPath: String)
+    fun tmpPath(tmoPath: String)
 
     var keywords:MutableMap<String, String>
 
