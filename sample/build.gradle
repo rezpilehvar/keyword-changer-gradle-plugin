@@ -6,7 +6,7 @@ keywordChanger {
     configs {
         stagingToProduction {
             srcPath "src/main"
-            dstPath "$buildDir/src/production"
+            tmpPath "$buildDir/src/production"
             renamePathAndFiles = true
 
             keywords = [

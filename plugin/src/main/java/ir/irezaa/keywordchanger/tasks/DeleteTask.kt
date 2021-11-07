@@ -19,13 +19,6 @@ abstract class DeleteTask : Delete() {
 
         override fun configure(task: DeleteTask) {
             task.delete(config.srcPath)
-            task.doLast {
-                try {
-                    File(config.srcPath).delete()
-                } catch (ex: Exception) {
-                    ex.printStackTrace()
-                }
-            }
         }
     }
 
@@ -39,14 +32,6 @@ abstract class DeleteTask : Delete() {
 
         override fun configure(task: DeleteTask) {
             task.delete(config.tmpPath)
-
-            task.doLast {
-                try {
-                    File(config.tmpPath).delete()
-                } catch (ex: Exception) {
-                    ex.printStackTrace()
-                }
-            }
         }
     }
 }

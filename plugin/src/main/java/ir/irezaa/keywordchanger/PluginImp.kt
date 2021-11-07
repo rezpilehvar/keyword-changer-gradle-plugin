@@ -15,13 +15,14 @@ class PluginImp : Plugin<Project> {
     private lateinit var taskFactory: TaskFactory
 
     private lateinit var project: Project
+    private lateinit var extension: PluginExtension
 
     override fun apply(project: Project) {
         this.project = project
         configManager = ConfigManager(project)
         taskFactory = TaskFactoryImp(project.tasks)
 
-        val extension: PluginExtension = project.extensions.create(
+        extension = project.extensions.create(
             "keywordChanger",
             PluginExtension::class.java,
             configManager
@@ -70,9 +71,13 @@ class PluginImp : Plugin<Project> {
         deleteTmpFilesTask.dependsOn(copyBackFilesTask)
 
 
-        project.tasks.register("changeKeywords${config.name.capitalize()}") {
+        val changeKeywordsTask = project.tasks.register("changeKeywords${config.name.capitalize()}") {
             it.dependsOn(deleteTmpFilesTask)
         }
 
+        if (extension.addConfigsToAndroidRelease) {
+            val task = project.tasks.named("assembleRelease")
+            task.dependsOn(changeKeywordsTask)
+        }
     }
 }
